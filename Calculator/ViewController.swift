@@ -34,7 +34,13 @@ class ViewController: UIViewController {
             number *= -1
         }
         
-        displayLabel.text = "\(number)"
+        let isInt = floor(number) == number
+        
+        if isInt {
+            displayLabel.text = "\(Int(number))"
+        } else {
+            displayLabel.text = "\(number)"
+        }
         
     }
     
