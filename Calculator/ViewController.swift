@@ -9,7 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    var isFinishedTypingNumber: Bool = true
+    
     @IBOutlet weak var displayLabel: UILabel!
     
     
@@ -17,6 +19,13 @@ class ViewController: UIViewController {
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         
         //What should happen when a non-number button is pressed
+        isFinishedTypingNumber = true
+        
+        guard let operation = sender.currentTitle else { return }
+        
+        if operation == "AC" {
+            displayLabel.text = "0"
+        }
         
     }
     
@@ -24,9 +33,33 @@ class ViewController: UIViewController {
     @IBAction func numButtonPressed(_ sender: UIButton) {
         
         //What should happen when a number is entered into the keypad
+        guard let numValue = sender.currentTitle else { return }
+        guard var labelText = displayLabel.text else { return }
+        
+        if isFinishedTypingNumber {
+            if numValue == "." || numValue == "0" {
+                labelText = "0."
+            } else {
+                if labelText != "0" || numValue != "0" {
+                    labelText = numValue
+                }
+            }
+            isFinishedTypingNumber = false
+        }
+        else {
+            if !labelText.contains(".") {
+                labelText.append(numValue)
+            } else {
+                if numValue != "." {
+                    labelText.append(numValue)
+                }
+            }
+        }
+        
+        displayLabel.text = labelText
         
     }
-
-
+    
+    
 }
 
