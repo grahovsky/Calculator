@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var isFinishedTypingNumber: Bool = true
+    private var isFinishedTypingNumber: Bool = true
     
     @IBOutlet weak var displayLabel: UILabel!
     
@@ -21,10 +21,17 @@ class ViewController: UIViewController {
         //What should happen when a non-number button is pressed
         isFinishedTypingNumber = true
         
+        guard let number = Double(displayLabel.text!) else {
+            fatalError("Cannot convert display label text to a Double.")
+        }
         guard let operation = sender.currentTitle else { return }
         
         if operation == "AC" {
             displayLabel.text = "0"
+        }
+        
+        if operation == "%" {
+            displayLabel.text = "\(number/100)"
         }
         
     }
